@@ -29,7 +29,7 @@ class Tree {
 
   buildTree(array) {
     if (array.length <= 1) {
-      return new TreeNode(array[0]);
+      return array[0] ? new TreeNode(array[0]) : null;
     }
     const midIndex = Math.floor(array.length / 2);
     const midElement = array[midIndex];
@@ -38,7 +38,18 @@ class Tree {
     root.setRight(this.buildTree(array.slice(midIndex + 1)));
     return root;
   }
+
+  prettyPrint(node, prefix = "", isLeft = true) {
+    if (node === null || node === undefined) {
+      return;
+    }
+
+    this.prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+    console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.value}`);
+    this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+  }
 }
 
-const t = new Tree([]);
+const t = new Tree([1, 2, 3, 4, 5, 6, 7, 8]);
 console.log(t.root);
+t.prettyPrint(t.root);
