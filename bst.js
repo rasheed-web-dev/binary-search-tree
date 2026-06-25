@@ -48,8 +48,22 @@ class Tree {
     console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.value}`);
     this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
   }
+
+  includes(value, rootNode = this.root) {
+    if (rootNode == null) {
+      return false;
+    }
+    if (rootNode.value == value) {
+      return true;
+    }
+    return (
+      this.includes(value, rootNode.left) ||
+      this.includes(value, rootNode.right)
+    );
+  }
 }
 
 const t = new Tree([1, 2, 3, 4, 5, 6, 7, 8]);
 console.log(t.root);
 t.prettyPrint(t.root);
+console.log(t.includes(0));
