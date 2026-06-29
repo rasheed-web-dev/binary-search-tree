@@ -123,10 +123,55 @@ class Tree {
       queue.shift();
     }
   }
+
+  inOrderForEach(callback) {
+    if (!callback || typeof callback != "function") {
+      throw Error("A Callback function is required");
+    }
+    this.inOrderForEachHelper(callback);
+  }
+  inOrderForEachHelper(callback, rootNode = this.root) {
+    if (rootNode == null) {
+      return;
+    }
+    this.inOrderForEachHelper(callback, rootNode.left);
+    callback(rootNode.value);
+    this.inOrderForEachHelper(callback, rootNode.right);
+  }
+
+  preOrderForEach(callback) {
+    if (!callback || typeof callback != "function") {
+      throw Error("A Callback function is required");
+    }
+    this.preOrderForEachHelper(callback);
+  }
+  preOrderForEachHelper(callback, rootNode = this.root) {
+    if (rootNode == null) {
+      return;
+    }
+    callback(rootNode.value);
+    this.preOrderForEachHelper(callback, rootNode.left);
+    this.preOrderForEachHelper(callback, rootNode.right);
+  }
+
+  postOrderForEach(callback) {
+    if (!callback || typeof callback != "function") {
+      throw Error("A Callback function is required");
+    }
+    this.postOrderForEachHelper(callback);
+  }
+  postOrderForEachHelper(callback, rootNode = this.root) {
+    if (rootNode == null) {
+      return;
+    }
+    this.postOrderForEachHelper(callback, rootNode.left);
+    this.postOrderForEachHelper(callback, rootNode.right);
+    callback(rootNode.value);
+  }
 }
 
 const t = new Tree([1, 2, 3, 4, 5, 6, 7, 8]);
 t.prettyPrint(t.root);
-t.levelOrderForEach((item) => {
+t.preOrderForEach((item) => {
   console.log(item);
 });
