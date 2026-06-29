@@ -78,10 +78,37 @@ class Tree {
       return rootNode;
     }
   }
+
+  deleteItem(value) {
+    this.root = this.deleteItemHelper(value);
+  }
+
+  deleteItemHelper(value, rootNode = this.root) {
+    if (rootNode.value == value) {
+      if (rootNode.left != null) {
+        if (rootNode.right != null) {
+          rootNode.left.right = rootNode.right;
+        }
+        rootNode = rootNode.left;
+        return rootNode;
+      }
+      if (rootNode.right != null) {
+        rootNode = rootNode.right;
+        return rootNode;
+      }
+      return null;
+    }
+    if (rootNode.value > value) {
+      rootNode.left = this.deleteItemHelper(value, rootNode.left);
+      return rootNode;
+    } else {
+      rootNode.right = this.deleteItemHelper(value, rootNode.right);
+      return rootNode;
+    }
+  }
 }
 
 const t = new Tree([1, 2, 3, 4, 5, 6, 7, 8]);
-console.log(t.root);
 t.insert(10);
 t.insert(-5);
 t.insert(0);
@@ -101,4 +128,8 @@ t.insert(15);
 t.insert(-20);
 t.insert(33);
 t.insert(-33);
+t.prettyPrint(t.root);
+t.deleteItem(-8);
+t.deleteItem(-999);
+t.deleteItem(5);
 t.prettyPrint(t.root);
