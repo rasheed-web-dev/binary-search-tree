@@ -106,30 +106,27 @@ class Tree {
       return rootNode;
     }
   }
+
+  levelOrderForEach(callback, rootNode = this.root) {
+    if (!callback || typeof callback != "function") {
+      throw Error("A Callback function is required");
+    }
+    let queue = [rootNode];
+    while (queue.length != 0) {
+      callback(queue[0].value);
+      if (queue[0].left != null) {
+        queue.push(queue[0].left);
+      }
+      if (queue[0].right != null) {
+        queue.push(queue[0].right);
+      }
+      queue.shift();
+    }
+  }
 }
 
 const t = new Tree([1, 2, 3, 4, 5, 6, 7, 8]);
-t.insert(10);
-t.insert(-5);
-t.insert(0);
-t.insert(3.14);
-t.insert(-8);
-t.insert(42);
-t.insert(7);
-t.insert(-1);
-t.insert(100);
-t.insert(-50);
-t.insert(0.001);
-t.insert(-0.5);
-t.insert(999);
-t.insert(-999);
-t.insert(20);
-t.insert(15);
-t.insert(-20);
-t.insert(33);
-t.insert(-33);
 t.prettyPrint(t.root);
-t.deleteItem(-8);
-t.deleteItem(-999);
-t.deleteItem(5);
-t.prettyPrint(t.root);
+t.levelOrderForEach((item) => {
+  console.log(item);
+});
