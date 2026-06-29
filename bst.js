@@ -24,18 +24,18 @@ class Tree {
       }
     });
     this.arr = newArr;
-    this.root = this.buildTree(this.arr);
+    this.root = this.#buildTree(this.arr);
   }
 
-  buildTree(array) {
+  #buildTree(array) {
     if (array.length <= 1) {
       return array[0] ? new TreeNode(array[0]) : null;
     }
     const midIndex = Math.floor(array.length / 2);
     const midElement = array[midIndex];
     const root = new TreeNode(midElement);
-    root.setLeft(this.buildTree(array.slice(0, midIndex)));
-    root.setRight(this.buildTree(array.slice(midIndex + 1)));
+    root.setLeft(this.#buildTree(array.slice(0, midIndex)));
+    root.setRight(this.#buildTree(array.slice(midIndex + 1)));
     return root;
   }
 
