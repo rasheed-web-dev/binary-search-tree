@@ -168,10 +168,34 @@ class Tree {
     this.postOrderForEachHelper(callback, rootNode.right);
     callback(rootNode.value);
   }
+
+  height(value, rootNode = this.root) {
+    if (rootNode == null) {
+      return undefined;
+    }
+    if (rootNode.value == value) {
+      return this.heightHelper(rootNode);
+    }
+    if (rootNode.value > value) {
+      return this.height(value, rootNode.left);
+    } else {
+      return this.height(value, rootNode.right);
+    }
+  }
+
+  heightHelper(rootNode, height = 0) {
+    if (rootNode == null) {
+      return height - 1;
+    }
+    if (rootNode.left == null && rootNode.right == null) {
+      return height;
+    }
+    let left = this.heightHelper(rootNode.left, height + 1);
+    let right = this.heightHelper(rootNode.right, height + 1);
+    return left > right ? left : right;
+  }
 }
 
-const t = new Tree([1, 2, 3, 4, 5, 6, 7, 8]);
+const t = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14]);
 t.prettyPrint(t.root);
-t.preOrderForEach((item) => {
-  console.log(item);
-});
+console.log(t.height(2));
