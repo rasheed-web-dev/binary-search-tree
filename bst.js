@@ -194,8 +194,22 @@ class Tree {
     let right = this.heightHelper(rootNode.right, height + 1);
     return left > right ? left : right;
   }
+
+  depth(value, rootNode = this.root, depth = 0) {
+    if (rootNode == null) {
+      return undefined;
+    }
+    if (rootNode.value == value) {
+      return depth;
+    }
+    if (rootNode.value > value) {
+      return this.depth(value, rootNode.left, depth + 1);
+    } else {
+      return this.depth(value, rootNode.right, depth + 1);
+    }
+  }
 }
 
 const t = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14]);
 t.prettyPrint(t.root);
-console.log(t.height(2));
+console.log(t.depth(2));
