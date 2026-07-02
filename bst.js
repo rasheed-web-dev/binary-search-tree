@@ -249,12 +249,4 @@ class Tree {
   }
 }
 
-const t = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14]);
-t.insert(100);
-t.insert(101);
-t.insert(102);
-t.prettyPrint(t.root);
-console.log(t.isBalanced());
-t.rebalance();
-t.prettyPrint(t.root);
-console.log(t.isBalanced());
+export { Tree };
