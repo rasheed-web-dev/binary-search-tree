@@ -208,8 +208,38 @@ class Tree {
       return this.depth(value, rootNode.right, depth + 1);
     }
   }
+
+  isBalanced(rootNode = this.root) {
+    if (rootNode.left == null && rootNode.right == null) {
+      return true;
+    } else if (rootNode.left == null && rootNode.right != null) {
+      if (this.height(rootNode.right.value) > 1) {
+        return false;
+      } else {
+        return true;
+      }
+    } else if (rootNode.right == null && rootNode.left != null) {
+      if (this.height(rootNode.left.value) > 1) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+
+    if (
+      Math.abs(
+        this.height(rootNode.left.value) - this.height(rootNode.right.value),
+      ) > 1
+    ) {
+      return false;
+    }
+    return this.isBalanced(rootNode.right) && this.isBalanced(rootNode.left);
+  }
 }
 
 const t = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14]);
+t.insert(100);
+t.insert(101);
+t.insert(102);
 t.prettyPrint(t.root);
-console.log(t.depth(2));
+console.log(t.isBalanced());
